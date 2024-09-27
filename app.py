@@ -16,7 +16,7 @@ st.set_page_config(page_title="BookFinder", page_icon="📚")
 @st.cache_resource
 def load_data():
     # Load CSV file from Google Drive (adjust path accordingly)
-    csv_file = '/content/drive/My Drive/book_embeddings.csv'  # Replace with your path
+    csv_file = '/content/drive/My Drive/from_idea_to_app/book_embeddings.csv'  # Replace with your path
     df = pd.read_csv(csv_file)
     return df
 
