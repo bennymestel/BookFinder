@@ -35,11 +35,16 @@ model, summarizer = load_models()
 def search_books(query, author, api_key):
     url = f"https://www.googleapis.com/books/v1/volumes?q=intitle:{query}+inauthor:{author}&langRestrict=en&key={api_key}"
     response = requests.get(url)
+
+    # Print the response status code for debugging
+    st.write(f"API Status Code: {response.status_code}")
     
     if response.status_code == 200:
         books = response.json()
         return books
     else:
+        # Print the error response for further investigation
+        st.write(f"Error: {response.text}")
         return None
 
 # Function to get the first description from the search results
