@@ -10,9 +10,7 @@ import streamlit_analytics
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
 
-with streamlit_analytics.track():
-    st.text_input("Write something")
-    st.button("Click me")
+streamlit_analytics.start_tracking()
 
 # Load the CSV file
 @st.cache_resource
@@ -134,3 +132,5 @@ if st.button("Find Similar Books"):
                 st.write("Failed to retrieve books")
     else:
         st.write("Please provide both the book title and author")
+
+streamlit_analytics.stop_tracking()
