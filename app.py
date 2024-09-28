@@ -26,7 +26,7 @@ df = load_data()
 @st.cache_resource
 def load_models():
     model = SentenceTransformer("all-MiniLM-L6-v2")
-    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+    summarizer = pipeline("summarization", model="t5-small")
     return model, summarizer
 
 model, summarizer = load_models()
