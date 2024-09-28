@@ -8,14 +8,9 @@ import numpy as np
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
 
-# Mount Google Drive (for Colab, comment out if running locally)
-# from google.colab import drive
-# drive.mount('/content/drive')
-
-# Load the CSV file from Google Drive
+# Load the CSV file
 @st.cache_resource
 def load_data():
-    # Load CSV file from Google Drive (adjust path accordingly)
     csv_file = 'book_embeddings_with_links.csv'  # Replace with your path
     df = pd.read_csv(csv_file)
     return df
@@ -43,7 +38,6 @@ def search_books(query, author, api_key):
         books = response.json()
         return books
     else:
-        # Print the error response for further investigation
         st.write(f"Error: {response.text}")
         return None
 
@@ -79,24 +73,31 @@ def find_similar_books(input_description):
     # Prepare results
     results = []
     for idx in sorted_indices[:5]:
-        book_name, author_name, text, link1, link2 = descriptions[idx]  # Added link variables
+        book_name, author_name, text, link1, link2 = descriptions[idx]
         results.append({
             "Book Name": book_name,
             "Author": author_name,
             "Description": text,
             "Similarity": f"{similarities[idx].item():.4f}",
-            "Download link 1": f'<a href="{link1}">Download link 1</a>' if link1 else 'N/A',  # Generate HTML for link 1
-            "Download link 2": f'<a href="{link2}">Download link 2</a>' if link2 else 'N/A'   # Generate HTML for link 2
+            "Download link 1": link1 if link1 else 'N/A',
+            "Download link 2": link2 if link2 else 'N/A'
         })
     
-    return results
+    return pd.DataFrame(results)
+
+# Function to make clickable links in the DataFrame
+def make_clickable(val):
+    """Convert URL into clickable link"""
+    if val and val.startswith('http'):
+        return f'<a href="{val}" target="_blank">Download</a>'
+    return val
 
 # Streamlit UI
 st.title("Book Finder")
 
 book_title = st.text_input("Enter the title of a book you like:")
 book_author = st.text_input("Enter the author:")
-api_key = st.secrets["google_books_api_key"]["key"]  # Use Streamlit's secrets management
+api_key = st.secrets["google_books_api_key"]["key"]
 
 if st.button("Find Similar Books"):
     if book_title and book_author:
@@ -109,9 +110,16 @@ if st.button("Find Similar Books"):
                     if author and genre:
                         summarized_description += " " + author[0] + "-" + genre[0]
                     st.write(f"Summarized description: {summarized_description}")
+                    
+                    # Find similar books
                     similar_books = find_similar_books(summarized_description)
-                    st.write("Top 5 similar books:")
-                    st.dataframe(similar_books)
+                    
+                    # Apply the clickable link formatting to Download link 1 and Download link 2
+                    similar_books['Download link 1'] = similar_books['Download link 1'].apply(make_clickable)
+                    similar_books['Download link 2'] = similar_books['Download link 2'].apply(make_clickable)
+                    
+                    # Render the DataFrame with links (allow HTML rendering)
+                    st.write(similar_books.to_html(escape=False), unsafe_allow_html=True)
                 else:
                     st.write("No description found")
             else:
