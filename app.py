@@ -1,9 +1,15 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import requests
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import numpy as np
+
+# Include Google Analytics tracking code
+with open("google_analytics.html", "r") as f:
+    html_code = f.read()
+    components.html(html_code, height=0)
 
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
