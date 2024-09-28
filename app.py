@@ -38,6 +38,7 @@ def search_books(query, author, api_key):
     response = requests.get(url)
 
     # Print the response status code for debugging
+    st.write(f"Full response: {response}")
     st.write(f"API Status Code: {response.status_code}")
     
     if response.status_code == 200:
