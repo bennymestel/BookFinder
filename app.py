@@ -34,7 +34,7 @@ model, summarizer = load_models()
 # Function to search books using Google Books API
 def search_books(query, author, api_key):
     url = f"https://www.googleapis.com/books/v1/volumes?q=intitle:{query}+inauthor:{author}&langRestrict=en&key={api_key}"
-    print("This is the api call "+url)
+    st.write("This is the api call "+url)
     response = requests.get(url)
 
     # Print the response status code for debugging
