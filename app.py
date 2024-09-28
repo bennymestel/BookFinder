@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
-from transformers import pipeline
-from sentence_transformers import SentenceTransformer, util
+from transformers==4.30.2 import pipeline
+from sentence-transformers==2.2.2 import SentenceTransformer, util
 import pandas as pd
 import numpy as np
 
