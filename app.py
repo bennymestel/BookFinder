@@ -16,7 +16,7 @@ st.set_page_config(page_title="BookFinder", page_icon="📚")
 @st.cache_resource
 def load_data():
     # Load CSV file from Google Drive (adjust path accordingly)
-    csv_file = 'book_embeddings.csv'  # Replace with your path
+    csv_file = 'book_embeddings_with_links.csv'  # Replace with your path
     df = pd.read_csv(csv_file)
     return df
 
@@ -67,7 +67,7 @@ def find_similar_books(input_description):
     
     # Retrieve embeddings and metadata from the DataFrame
     embeddings = df['embedding'].apply(lambda x: np.fromstring(x[1:-1], sep=',').astype(np.float32)).values
-    descriptions = df[['title', 'author', 'description']].values
+    descriptions = df[['title', 'author', 'description', 'Libgen_Link_1', 'Libgen_Link_2']].values  # Added link columns
     
     # Compute cosine similarities
     embeddings = np.vstack(embeddings)
@@ -79,12 +79,14 @@ def find_similar_books(input_description):
     # Prepare results
     results = []
     for idx in sorted_indices[:5]:
-        book_name, author_name, text = descriptions[idx]
+        book_name, author_name, text, link1, link2 = descriptions[idx]  # Added link variables
         results.append({
             "Book Name": book_name,
             "Author": author_name,
             "Description": text,
-            "Similarity": f"{similarities[idx].item():.4f}"
+            "Similarity": f"{similarities[idx].item():.4f}",
+            "Download link 1": f'<a href="{link1}">Download link 1</a>' if link1 else 'N/A',  # Generate HTML for link 1
+            "Download link 2": f'<a href="{link2}">Download link 2</a>' if link2 else 'N/A'   # Generate HTML for link 2
         })
     
     return results
