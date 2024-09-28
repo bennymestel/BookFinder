@@ -117,6 +117,8 @@ if st.button("Find Similar Books"):
                     # Apply the clickable link formatting to Download link 1 and Download link 2
                     similar_books['Download link 1'] = similar_books['Download link 1'].apply(make_clickable)
                     similar_books['Download link 2'] = similar_books['Download link 2'].apply(make_clickable)
+
+                    similar_books.index = np.arange(1, len(similar_books) + 1)
                     
                     # Render the DataFrame with links (allow HTML rendering)
                     st.write(similar_books.to_html(escape=False), unsafe_allow_html=True)
