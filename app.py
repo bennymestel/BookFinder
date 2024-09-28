@@ -78,7 +78,6 @@ def find_similar_books(input_description):
             "Book Name": book_name,
             "Author": author_name,
             "Description": text,
-            "Similarity": f"{similarities[idx].item():.4f}",
             "Download link 1": link1 if link1 else 'N/A',
             "Download link 2": link2 if link2 else 'N/A'
         })
