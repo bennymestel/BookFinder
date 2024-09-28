@@ -9,11 +9,6 @@ import numpy as np
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
 
-# Include Google Analytics tracking code
-with open("google_analytics.html", "r") as f:
-    html_code = f.read()
-    components.html(html_code, height=0)
-
 # Load the CSV file
 @st.cache_resource
 def load_data():
