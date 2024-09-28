@@ -5,9 +5,14 @@ from transformers import pipeline
 from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import numpy as np
+import streamlit_analytics
 
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
+
+with streamlit_analytics.track():
+    st.text_input("Write something")
+    st.button("Click me")
 
 # Load the CSV file
 @st.cache_resource
