@@ -88,9 +88,10 @@ def find_similar_books(input_description):
 # Function to make clickable links in the DataFrame
 def make_clickable(val):
     """Convert URL into clickable link"""
-    if val and val.startswith('http'):
+    if isinstance(val, str) and val.startswith('http'):
         return f'<a href="{val}" target="_blank">Download</a>'
-    return val
+    return 'N/A'  # Return 'N/A' if the value is not a valid link
+
 
 # Streamlit UI
 st.title("Book Finder")
