@@ -33,7 +33,9 @@ st.markdown("""
 
 
     .stButton>button:hover {
-        background-color: #0056b3; /* Darker blue button hover color */
+        background-color: #d3d3d3
+
+; /* Darker blue button hover color */
         border: none;
     }
 
