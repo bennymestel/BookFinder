@@ -76,11 +76,11 @@ def find_similar_books(input_description):
     for idx in sorted_indices[:5]:
         book_name, author_name, text, link1, link2 = descriptions[idx]
         results.append({
-            "Book Name": book_name,
+            "Title Name": book_name,
             "Author": author_name,
             "Description": text,
-            "Download link 1": link1 if link1 else 'N/A',
-            "Download link 2": link2 if link2 else 'N/A'
+            "Download Link 1": link1 if link1 else 'N/A',
+            "Download Link 2": link2 if link2 else 'N/A'
         })
     
     return pd.DataFrame(results)
