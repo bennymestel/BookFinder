@@ -125,7 +125,7 @@ if st.button("Find Similar Books"):
                     similar_books.index = np.arange(1, len(similar_books) + 1)
                     
                     # Render the DataFrame with links (allow HTML rendering)
-                    st.dataframe(similar_books)
+                    st.write(similar_books.to_html(escape=False), unsafe_allow_html=True)
                 else:
                     st.write("No description found")
             else:
