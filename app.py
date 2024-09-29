@@ -56,6 +56,19 @@ st.markdown("""
         padding: 8px;
         border-bottom: 1px solid #dddddd;
     }
+     /* Set the background color of the text input fields to white */
+    .stTextInput > div > div > input {
+        background-color: #ffffff; /* White background for the input fields */
+        color: #000000; /* Black text color */
+        border: 1px solid #cccccc; /* Light border to match the design */
+        padding: 8px; /* Add some padding for better look */
+        border-radius: 5px; /* Optional: Rounded corners for a smoother look */
+    }
+
+    /* This sets the font-weight for the labels (bold) */
+    .stTextInput > label {
+        font-weight: bold;
+    }
 
     </style>
     """, unsafe_allow_html=True)
@@ -149,8 +162,8 @@ st.markdown("<h1 style='text-align: center;'>Book Finder</h1>", unsafe_allow_htm
 # Add a short description of the app
 st.markdown("<p style='text-align: center;'>Find books similar to your favorites by analyzing descriptions and genres.</p>", unsafe_allow_html=True)
 
-book_title = st.text_input("Enter the title of a book you've previously enjoyed:")
-book_author = st.text_input("Enter the author:")
+book_title = st.text_input("**Enter the title of a book you've previously enjoyed:**")
+book_author = st.text_input("**Enter the author:**")
 api_key = st.secrets["google_books_api_key"]["key"]
 
 # Center the button using Streamlit's native st.button inside three equally-sized columns
