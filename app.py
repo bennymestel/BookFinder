@@ -10,6 +10,46 @@ import streamlit_analytics
 # Set page configuration
 st.set_page_config(page_title="BookFinder", page_icon="📚")
 
+# Inject custom CSS for background color and page styling
+st.markdown("""
+    <style>
+    .reportview-container {
+        background-color: #e6f7ff; /* Light blue background */
+        padding: 10px;
+    }
+
+    .main .block-container {
+        background-color: #ffffff; /* Main content background (white) */
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+        color: #000000; /* Black heading color */
+    }
+
+    p {
+        color: #000000; /* Black paragraph text */
+    }
+
+    .stButton>button {
+        background-color: #007BFF; /* Button background color (blue) */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+    }
+
+    .stButton>button:hover {
+        background-color: #0056b3; /* Button hover color (darker blue) */
+        border: none;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
 streamlit_analytics.start_tracking()
 
 # Load the CSV file
