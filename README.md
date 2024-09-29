@@ -36,7 +36,7 @@ Install the dependencies:
 
    ```bash
    pip install -r requirements.txt
-
+```
 Add your Google Books API key to the streamlit secrets file:
 
    ```[google_books_api_key]
@@ -46,7 +46,7 @@ Run the application:
 
    ```bash
    streamlit run app.py
-
+```
 Open the browser to view the app at http://localhost:8501.
 
 Embeddings
@@ -66,7 +66,7 @@ Run the script:
 
    ```bash
    python generate_embeddings.py
-
+```
 The embeddings will be saved to a new CSV file, which can then be used in the main application.
 
 Author
