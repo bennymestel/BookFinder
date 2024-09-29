@@ -13,13 +13,14 @@ st.set_page_config(page_title="BookFinder", page_icon="📚")
 # Inject custom CSS for background color and page styling
 st.markdown("""
     <style>
-    .reportview-container {
-        background-color: #e6f7ff; /* Light blue background */
-        padding: 10px;
+    /* This sets the background color of the entire page */
+    .stApp {
+        background-color: #e6f7ff;  /* Light blue background */
     }
 
+    /* This styles the main content container */
     .main .block-container {
-        background-color: #ffffff; /* Main content background (white) */
+        background-color: #ffffff; /* White background for main content */
         padding: 2rem;
         border-radius: 10px;
         box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
@@ -34,7 +35,7 @@ st.markdown("""
     }
 
     .stButton>button {
-        background-color: #007BFF; /* Button background color (blue) */
+        background-color: #007BFF; /* Blue button */
         color: white;
         padding: 10px 20px;
         font-size: 16px;
@@ -43,7 +44,7 @@ st.markdown("""
     }
 
     .stButton>button:hover {
-        background-color: #0056b3; /* Button hover color (darker blue) */
+        background-color: #0056b3; /* Darker blue button hover color */
         border: none;
     }
 
