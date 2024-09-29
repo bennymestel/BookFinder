@@ -20,10 +20,7 @@ st.markdown("""
 
     /* This styles the main content container */
     .main .block-container {
-        background-color: #ffffff; /* White background for main content */
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+        background-color: #e6f7ff;
     }
 
     h1, h2, h3 {
@@ -34,14 +31,6 @@ st.markdown("""
         color: #000000; /* Black paragraph text */
     }
 
-    .stButton>button {
-        background-color: #007BFF; /* Blue button */
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 8px;
-        border: none;
-    }
 
     .stButton>button:hover {
         background-color: #0056b3; /* Darker blue button hover color */
