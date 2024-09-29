@@ -76,7 +76,7 @@ def find_similar_books(input_description):
     for idx in sorted_indices[:5]:
         book_name, author_name, text, link1, link2 = descriptions[idx]
         results.append({
-            "Title Name": book_name,
+            "Book Name": book_name,
             "Author": author_name,
             "Description": text,
             "Download Link 1": link1 if link1 else 'N/A',
