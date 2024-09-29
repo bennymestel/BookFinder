@@ -40,13 +40,16 @@
 
 Add your Google Books API key to the streamlit secrets file:
 
-   ```[google_books_api_key]
-   key = "YOUR_GOOGLE_BOOKS_API_KEY"```
+   ```bash
+   [google_books_api_key]
+   key = "YOUR_GOOGLE_BOOKS_API_KEY"
+   ```
 
 3. Run the application:
-
    ```bash
-   streamlit run app.py```
+   streamlit run app.py
+   ```
+   
 4. Open the browser to view the app at http://localhost:8501.
 
 ## Embeddings
