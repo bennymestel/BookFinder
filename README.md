@@ -1,12 +1,12 @@
 # BookFinder - Final Project
 
-BookFinder is a web application that allows users to find books similar to ones they've enjoyed by analyzing book descriptions and genres. It leverages the power of natural language processing to compare book descriptions and retrieve recommendations from a custom dataset.
+**BookFinder** is a web application that allows users to find books similar to ones they've enjoyed by analyzing book descriptions and genres. It leverages the power of natural language processing to compare book descriptions and retrieve recommendations from a custom dataset.
 
 ## Features
 
-- Search for books using the Google Books API by providing a book title and author.
-- Summarizes the description of the book and uses it to find similar books from a pre-loaded dataset.
-- Displays results with clickable download links (Libgen) for easy access to the recommended books.
+- **Search for books** using the Google Books API by providing a book title and author.
+- **Summarizes** the description of the book and uses it to find similar books from a pre-loaded dataset.
+- Displays results with **clickable download links** (Libgen) for easy access to the recommended books.
 
 ## Tech Stack
 
@@ -67,6 +67,9 @@ bash
 Copy code
 python generate_embeddings.py
 The embeddings will be saved to a new CSV file, which can then be used in the main application.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 Author
 Benny Mestel
