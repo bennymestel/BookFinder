@@ -49,16 +49,16 @@ Run the application:
 ```
 Open the browser to view the app at http://localhost:8501.
 
-Embeddings
+## Embeddings
 The book_embeddings_with_links.csv file contains metadata about books (title, author, description, and download links) along with precomputed embeddings for each book description. These embeddings were generated using the SentenceTransformer model (all-MiniLM-L6-v2).
 
-How to Generate Book Embeddings
+## How to Generate Book Embeddings
 If you want to generate or update the book embeddings, you can use the script generate_embeddings.py provided in this repository. The script processes a CSV file containing book metadata (title, author, description, and genre), creates embeddings using the Sentence-Transformers library, and saves the updated data with embeddings in a new CSV file.
 
-Steps to Generate Embeddings:
+## Steps to Generate Embeddings:
 Install the required dependencies by following the instructions in requirements.txt.
 
-Run the embedding script:
+## Run the embedding script:
 
 Ensure you have a CSV file containing book metadata.
 Modify the file paths in the generate_embeddings.py script as needed.
@@ -69,5 +69,5 @@ Run the script:
 ```
 The embeddings will be saved to a new CSV file, which can then be used in the main application.
 
-Author
+## Author
 Benny Mestel
