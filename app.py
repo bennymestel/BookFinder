@@ -97,7 +97,7 @@ def make_clickable(val):
 st.markdown("<h1 style='text-align: center;'>Book Finder</h1>", unsafe_allow_html=True)
 
 # Add a short description of the app
-st.write("Discover new books similar to the ones you've enjoyed by analyzing book descriptions and genres.")
+st.write("Find books similar to your favorites by analyzing descriptions and genres.")
 
 book_title = st.text_input("Enter the title of a book you've previously enjoyed:")
 book_author = st.text_input("Enter the author:")
@@ -121,15 +121,35 @@ if st.button("Find Similar Books"):
                     # Apply the clickable link formatting to Download link 1 and Download link 2
                     similar_books['Download link 1'] = similar_books['Download link 1'].apply(make_clickable)
                     similar_books['Download link 2'] = similar_books['Download link 2'].apply(make_clickable)
-
                     similar_books.index = np.arange(1, len(similar_books) + 1)
 
-                    styled_df = similar_books.style.set_table_styles({
-                        '': [{'selector': 'th', 'props': [('text-align', 'center')]}],  # Center-align headers
-                    }).hide_index()
-                    
-                    # Render the DataFrame with links (allow HTML rendering)
-                    st.write(similar_books.to_html(escape=False), unsafe_allow_html=True)
+                    # Create custom HTML for centering headers and rows
+                    def style_table(df):
+                        return df.to_html(escape=False, classes='mystyle')
+
+                    # Inject custom CSS for table styling
+                    st.markdown("""
+                    <style>
+                    .mystyle {
+                        font-size: 12pt; 
+                        border-collapse: collapse; 
+                        width: 100%;
+                    }
+                    .mystyle th {
+                        text-align: center;
+                        background-color: #f4f4f4;
+                        padding: 8px;
+                    }
+                    .mystyle td {
+                        text-align: center;
+                        padding: 8px;
+                    }
+                    </style>
+                    """, unsafe_allow_html=True)
+
+                    # Render the styled DataFrame as HTML
+                    st.write(style_table(similar_books), unsafe_allow_html=True)
+
                 else:
                     st.write("No description found")
             else:
