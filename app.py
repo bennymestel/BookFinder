@@ -38,6 +38,24 @@ st.markdown("""
 ; /* Darker blue button hover color */
         border: none;
     }
+    .mystyle {
+        font-size: 12pt; 
+        border-collapse: collapse; 
+        width: 100%;
+        background-color: #ffffff; /* Set the table background to white */
+    }
+    .mystyle th {
+        text-align: center;
+        background-color: #ffffff; /* Ensure header background is white */
+        padding: 8px;
+        border-bottom: 1px solid #dddddd;
+    }
+    .mystyle td {
+        text-align: center;
+        background-color: #ffffff; /* Ensure table cell background is white */
+        padding: 8px;
+        border-bottom: 1px solid #dddddd;
+    }
 
     </style>
     """, unsafe_allow_html=True)
