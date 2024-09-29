@@ -160,7 +160,7 @@ def make_clickable(val):
 st.markdown("<h1 style='text-align: center;'>Book Finder</h1>", unsafe_allow_html=True)
 
 # Add a short description of the app
-st.markdown("<p style='text-align: center;'>Find books similar to your favorites by analyzing descriptions and genres.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'><em>Find books similar to your favorites by analyzing descriptions and genres.</em></p>", unsafe_allow_html=True)
 
 book_title = st.text_input("**Enter the title of a book you've previously enjoyed:**")
 book_author = st.text_input("**Enter the author:**")
