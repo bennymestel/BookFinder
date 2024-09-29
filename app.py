@@ -103,62 +103,64 @@ book_title = st.text_input("Enter the title of a book you've previously enjoyed:
 book_author = st.text_input("Enter the author:")
 api_key = st.secrets["google_books_api_key"]["key"]
 
-# Center the button using Streamlit's native st.button inside columns
-col1, col2, col3 = st.columns([1, 2, 1])
+# Center the button using Streamlit's native st.button inside three equally-sized columns
+col1, col2, col3 = st.columns([1, 1, 1])
 with col2:
-    if st.button("Find Similar Books"):
-        if book_title and book_author:
-            with st.spinner("Searching for books..."):
-                books = search_books(book_title, book_author, api_key)
-                if books:
-                    description, author, genre = get_first_description(books)
-                    if description:
-                        summarized_description = summarize_text(description)
-                        if author and genre:
-                            summarized_description += " " + author[0] + "-" + genre[0]
-                        st.write(f"Summarized description: {summarized_description}")
-                        
-                        # Find similar books
-                        similar_books = find_similar_books(summarized_description)
-                        
-                        # Apply the clickable link formatting to Download link 1 and Download link 2
-                        similar_books['Download link 1'] = similar_books['Download link 1'].apply(make_clickable)
-                        similar_books['Download link 2'] = similar_books['Download link 2'].apply(make_clickable)
+    centered_button = st.button("Find Similar Books")
 
-                        similar_books.index = np.arange(1, len(similar_books) + 1)
+if centered_button:
+    if book_title and book_author:
+        with st.spinner("Searching for books..."):
+            books = search_books(book_title, book_author, api_key)
+            if books:
+                description, author, genre = get_first_description(books)
+                if description:
+                    summarized_description = summarize_text(description)
+                    if author and genre:
+                        summarized_description += " " + author[0] + "-" + genre[0]
+                    st.write(f"Summarized description: {summarized_description}")
+                    
+                    # Find similar books
+                    similar_books = find_similar_books(summarized_description)
+                    
+                    # Apply the clickable link formatting to Download link 1 and Download link 2
+                    similar_books['Download link 1'] = similar_books['Download link 1'].apply(make_clickable)
+                    similar_books['Download link 2'] = similar_books['Download link 2'].apply(make_clickable)
 
-                        # Create custom HTML for centering headers and rows
-                        def style_table(df):
-                            return df.to_html(escape=False, classes='mystyle')
+                    similar_books.index = np.arange(1, len(similar_books) + 1)
 
-                        # Inject custom CSS for table styling
-                        st.markdown("""
-                        <style>
-                        .mystyle {
-                            font-size: 12pt; 
-                            border-collapse: collapse; 
-                            width: 100%;
-                        }
-                        .mystyle th {
-                            text-align: center;
-                            background-color: #f4f4f4;
-                            padding: 8px;
-                        }
-                        .mystyle td {
-                            text-align: center;
-                            padding: 8px;
-                        }
-                        </style>
-                        """, unsafe_allow_html=True)
+                    # Create custom HTML for centering headers and rows
+                    def style_table(df):
+                        return df.to_html(escape=False, classes='mystyle')
 
-                        # Render the styled DataFrame as HTML
-                        st.write(style_table(similar_books), unsafe_allow_html=True)
+                    # Inject custom CSS for table styling
+                    st.markdown("""
+                    <style>
+                    .mystyle {
+                        font-size: 12pt; 
+                        border-collapse: collapse; 
+                        width: 100%;
+                    }
+                    .mystyle th {
+                        text-align: center;
+                        background-color: #f4f4f4;
+                        padding: 8px;
+                    }
+                    .mystyle td {
+                        text-align: center;
+                        padding: 8px;
+                    }
+                    </style>
+                    """, unsafe_allow_html=True)
 
-                    else:
-                        st.write("No description found")
+                    # Render the styled DataFrame as HTML
+                    st.write(style_table(similar_books), unsafe_allow_html=True)
+
                 else:
-                    st.write("Failed to retrieve books")
-        else:
-            st.write("Please provide both the book title and author")
+                    st.write("No description found")
+            else:
+                st.write("Failed to retrieve books")
+    else:
+        st.write("Please provide both the book title and author")
 
 streamlit_analytics.stop_tracking()
