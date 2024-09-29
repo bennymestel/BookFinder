@@ -31,21 +31,19 @@
    ```bash
    git clone https://github.com/bennymestel/BookFinder_FinalProject.git
    cd BookFinder_FinalProject
+
 Install the dependencies:
 
 bash
-Copy code
 pip install -r requirements.txt
 Add your Google Books API key to the streamlit secrets file:
 
 plaintext
-Copy code
 [google_books_api_key]
 key = "YOUR_GOOGLE_BOOKS_API_KEY"
 Run the application:
 
 bash
-Copy code
 streamlit run app.py
 Open the browser to view the app at http://localhost:8501.
 
@@ -64,8 +62,14 @@ Ensure you have a CSV file containing book metadata.
 Modify the file paths in the generate_embeddings.py script as needed.
 Run the script:
 bash
-Copy code
 python generate_embeddings.py
+The embeddings will be saved to a new CSV file, which can then be used in the main application.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Author
+Benny Mestel
 The embeddings will be saved to a new CSV file, which can then be used in the main application.
 
 License
