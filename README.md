@@ -31,12 +31,14 @@
    ```bash
    git clone https://github.com/bennymestel/BookFinder_FinalProject.git
    cd BookFinder_FinalProject
+ ```
 
 2. Install the dependencies:
 
    ```bash
    pip install -r requirements.txt
 ```
+
 Add your Google Books API key to the streamlit secrets file:
 
    ```[google_books_api_key]
