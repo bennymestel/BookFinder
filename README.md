@@ -68,8 +68,5 @@ Copy code
 python generate_embeddings.py
 The embeddings will be saved to a new CSV file, which can then be used in the main application.
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 Author
 Benny Mestel
