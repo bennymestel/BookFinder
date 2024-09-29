@@ -35,7 +35,8 @@
 2. Install the dependencies:
 
    ```bash
-   pip install -r requirements.txt ```
+   pip install -r requirements.txt
+   ```
 
 Add your Google Books API key to the streamlit secrets file:
 
