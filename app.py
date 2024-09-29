@@ -96,6 +96,9 @@ def make_clickable(val):
 # Streamlit UI
 st.title("Book Finder")
 
+# Add a short description of the app
+st.write("Discover new books similar to the ones you've enjoyed by analyzing book descriptions and genres.")
+
 book_title = st.text_input("Enter the title of a book you've previously enjoyed:")
 book_author = st.text_input("Enter the author:")
 api_key = st.secrets["google_books_api_key"]["key"]
