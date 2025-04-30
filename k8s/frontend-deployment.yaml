@@ -24,8 +24,11 @@ spec:
               name: bookfinder-config
               key: BACKEND_URL
         resources:
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
           limits:
-            memory: "512Mi"
+            memory: "2Gi"
             cpu: "500m"
         volumeMounts:
         - name: secrets
