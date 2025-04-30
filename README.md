@@ -1,75 +1,67 @@
 # BookFinder - Final Project
 
-**BookFinder** is a web application that allows users to find books similar to ones they've enjoyed by analyzing book descriptions and genres. It leverages the power of natural language processing to compare book descriptions and retrieve recommendations from a custom dataset.
+**BookFinder** is a web application that helps users discover books similar to their favorites by analyzing book descriptions and genres. It leverages natural language processing to compare book descriptions and provide personalized recommendations from a custom dataset.
 
 ## Features
 
-- **Search for books** using the Google Books API by providing a book title and author.
-- **Summarizes** the description of the book and uses it to find similar books from a pre-loaded dataset.
-- Displays results with **clickable download links** (Libgen) for easy access to the recommended books.
+- **Search for books**: Use the Google Books API to search for books by title and author.
+- **Summarize descriptions**: Summarize book descriptions using a pre-trained model (`t5-small`) to extract key information.
+- **Find similar books**: Compare book descriptions using sentence embeddings to recommend similar books from a pre-loaded dataset.
+- **Clickable links**: Display results with clickable download links (Libgen) for easy access to recommended books.
 
 ## Tech Stack
 
 - **Python**: Core programming language.
-- **Streamlit**: Frontend framework used to build the interactive web application.
-- **Transformers**: Used for text summarization (`t5-small` model).
-- **Sentence-Transformers**: Used for sentence embeddings to find similar books.
+- **Streamlit**: Frontend framework for building the interactive web application.
+- **Transformers**: Used for text summarization.
+- **Sentence-Transformers**: Used for generating sentence embeddings.
 - **Pandas**: Data manipulation and analysis.
-- **NumPy**: Used for numerical operations.
-- **Google Books API**: Used to retrieve book data by title and author.
+- **NumPy**: Numerical operations.
+- **Google Books API**: Retrieve book data by title and author.
+- **Docker**: Containerization for both frontend and backend.
+- **Kubernetes**: Orchestration for deploying the application.
 
-## Files in the Repository
+## Repository Structure
 
-- **app.py**: Main file that runs the Streamlit web app and includes all the logic for searching books, summarizing descriptions, and recommending similar books.
-- **book_embeddings_with_links.csv**: A CSV file containing book metadata and embeddings used for finding similar books.
-- **requirements.txt**: A list of all the dependencies required to run the project.
-- **generate_embeddings.py**: Script used to generate the book embeddings from the raw data.
+- **app/**: Frontend Streamlit application
+  - **app.py**: Main Streamlit web application.
+  - **Dockerfile**: Container definition for the frontend.
+  - **requirements.txt**: Frontend dependencies.
+- **backend/**: Backend API service
+  - **app.py**: Flask API for serving book data.
+  - **book_embeddings.csv**: Book data with embeddings.
+  - **Dockerfile**: Container definition for the backend.
+  - **requirements.txt**: Backend dependencies.
+- **k8s/**: Kubernetes manifests for deployment
+  - **kustomization.yaml**: Kustomize configuration.
+  - **frontend-deployment.yaml**: Frontend deployment configuration.
+  - **frontend-service.yaml**: Frontend service configuration.
+  - **backend-deployment.yaml**: Backend deployment configuration.
+  - **backend-service.yaml**: Backend service configuration.
+  - **configmap.yaml**: ConfigMap for application configuration.
+  - **secret.yaml**: Secrets for API keys and sensitive data.
+- **generate_embeddings.py**: Script to generate book embeddings.
 
-## Setup Instructions
+## How to Replicate the Project
 
-1. Clone the repository:
+### Prerequisites
+
+- Install **Kubernetes** on your system.
+- Obtain a Google Books API key.
+
+### Deployment Using Kubernetes
+
+1. Apply the Kubernetes manifests:
    ```bash
-   git clone https://github.com/bennymestel/BookFinder_FinalProject.git
-   cd BookFinder_FinalProject```
-
-2. Install the dependencies:
-
-   ```bash
-   pip install -r requirements.txt
+   kubectl apply -k k8s/
    ```
 
-3. Add your Google Books API key to the streamlit secrets file:
+2. Access the application using the service URL provided by Kubernetes.
 
-   ```bash
-   [google_books_api_key]
-   key = "YOUR_GOOGLE_BOOKS_API_KEY"
-   ```
+### Notes
 
-4. Run the application:
-   ```bash
-   streamlit run app.py
-   ```
-   
-5. Open the browser to view the app at http://localhost:8501.
-
-## How to Generate Book Embeddings
-The book_embeddings_with_links.csv file contains metadata about books (title, author, description, and download links) along with precomputed embeddings for each book description. These embeddings were generated using the SentenceTransformer model (all-MiniLM-L6-v2).
-
-If you want to generate or update the book embeddings, you can use the script generate_embeddings.py provided in this repository. The script processes a CSV file containing book metadata (title, author, description, and genre), creates embeddings using the Sentence-Transformers library, and saves the updated data with embeddings in a new CSV file.
-
-**Steps**:
-1. Install the required dependencies by following the instructions in requirements.txt.
-
-2. Run the embedding script:
-
-Ensure you have a CSV file containing book metadata.
-Modify the file paths in the generate_embeddings.py script as needed.
-Run the script:
-
-   ```bash
-   python generate_embeddings.py
-```
-The embeddings will be saved to a new CSV file, which can then be used in the main application.
-
-## Author
-Benny Mestel
+- The Docker images for the frontend and backend are pre-built and available on DockerHub under the `bennymestel` account:
+  - Frontend: `bennymestel/book-finder-frontend`
+  - Backend: `bennymestel/book-finder-backend`
+- To generate new book embeddings, use the `generate_embeddings.py` script.
+- Ensure your Google Books API key is stored securely in the `k8s/secret.yaml` file or as an environment variable.
