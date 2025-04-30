@@ -125,12 +125,8 @@ def load_data():
             return df
         else:
             st.error(f"Error fetching data from API: {response.status_code}")
-            # Fallback to local file if API fails
-            return pd.read_csv('book_embeddings.csv')
     except Exception as e:
         st.error(f"Error connecting to CSV API: {str(e)}")
-        # Fallback to local file if API fails
-        return pd.read_csv('book_embeddings.csv')
 
 df = load_data()
 
