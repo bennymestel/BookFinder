@@ -1,10 +1,41 @@
 import streamlit as st
-import streamlit.components.v1 as components
-import requests
-from transformers import pipeline
-from sentence_transformers import SentenceTransformer, util
 import pandas as pd
-import numpy as np
+import requests
+import streamlit_analytics
+import ssl
+import os
+import warnings
+import urllib3
+
+# Suppress all warnings
+warnings.filterwarnings('ignore')
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Patch all SSL/HTTPS connections
+ssl._create_default_https_context = ssl._create_unverified_context
+os.environ['PYTHONHTTPSVERIFY'] = '0'
+
+# Monkey patch urllib3 to disable certificate validation for all requests
+original_connect = urllib3.connection.HTTPSConnection.connect
+
+def patched_connect(self):
+    self.ca_certs = None
+    self.ca_cert_dir = None
+    self.cert_reqs = ssl.CERT_NONE
+    return original_connect(self)
+
+urllib3.connection.HTTPSConnection.connect = patched_connect
+
+# Patch requests library
+requests.packages.urllib3.disable_warnings()
+session = requests.Session()
+session.verify = False
+
+# After disabling SSL, import the models
+from sentence_transformers import SentenceTransformer, util
+from transformers import pipeline
+
+import streamlit.components.v1 as components
 import streamlit_analytics
 
 # Set page configuration
@@ -80,10 +111,7 @@ streamlit_analytics.start_tracking()
 def load_data():
     try:
         # Update to match your CSV API's actual endpoint and port
-        api_url = "http://csv-api:5000/recommend"  # Use container name as hostname in Docker network
-        
-        # For local development, you might use:
-        # api_url = "http://localhost:5000/recommend"
+        api_url = "http://backend:5000/books"  # Use container name as hostname in Docker network
         
         # Since your API expects a query parameter, we need to provide one
         # You might want to adjust this to get all books or a sensible default
