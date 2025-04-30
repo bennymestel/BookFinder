@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend  # This must match exactly what your app is trying to connect to
+  name: backend
 spec:
   selector:
-    app: bookfinder-backend  # This should match your deployment selector
+    app: book-finder-backend 
   ports:
   - port: 5000
     targetPort: 5000
