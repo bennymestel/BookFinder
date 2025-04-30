@@ -1,9 +1,0 @@
-streamlit
-transformers==4.24.0
-sentence-transformers==2.2.2
-pandas
-numpy
-requests
-pip>=24.2
-setuptools>=58.0.0
-streamlit-analytics
