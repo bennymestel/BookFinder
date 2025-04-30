@@ -3,11 +3,9 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy requirements and install
-COPY requirements.txt .
+COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY app.py .
 # Add this line to copy the .streamlit directory with secrets
 COPY .streamlit/ /app/.streamlit/
 

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-finder-frontend
+spec:
+  selector:
+    matchLabels:
+      app: book-finder-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: book-finder-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: bennymestel/book-finder-frontend:latest
+        ports:
+        - containerPort: 8501
+        env:
+        - name: BACKEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: bookfinder-config
+              key: BACKEND_URL
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: secrets
+          mountPath: "/app/.streamlit/secrets.toml"
+          subPath: "secrets.toml"
+      volumes:
+      - name: secrets
+        secret:
+          secretName: streamlit-secrets
