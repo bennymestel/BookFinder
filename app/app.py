@@ -6,6 +6,7 @@ import ssl
 import os
 import warnings
 import urllib3
+import numpy as np
 
 # Suppress all warnings
 warnings.filterwarnings('ignore')
