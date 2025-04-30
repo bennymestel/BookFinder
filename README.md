@@ -21,6 +21,22 @@
 - **Docker**: Containerization for both frontend and backend.
 - **Kubernetes**: Orchestration for deploying the application.
 
+## Architecture
+
+The application consists of two main components:
+
+1. **Frontend Server**:
+   - Built using Streamlit.
+   - Runs on port `8501`.
+   - Connects to the backend server to fetch book recommendations.
+
+2. **Backend Server**:
+   - Built using Flask.
+   - Runs on port `5000`.
+   - Serves book data and recommendations by querying a CSV file containing a database of 500 popular books.
+
+The frontend and backend communicate via REST API calls. The backend uses pre-computed sentence embeddings stored in the CSV file to find similar books.
+
 ## Repository Structure
 
 - **app/**: Frontend Streamlit application
@@ -51,12 +67,19 @@
 
 ### Deployment Using Kubernetes
 
-1. Apply the Kubernetes manifests:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/bennymestel/BookFinder_FinalProject.git
+   cd BookFinder_FinalProject
+   ```
+
+2. Apply the Kubernetes manifests:
    ```bash
    kubectl apply -k k8s/
    ```
 
-2. Access the application using the service URL provided by Kubernetes.
+3. Access the application:
+   - The frontend server will be available at `http://localhost:8501`.
 
 ### Notes
 
