@@ -85,7 +85,7 @@ cd BookFinder
 kubectl apply -k k8s/
 
 # Streamlit will be available at:
-http://localhost:8501
+http://localhost
 ```
 
 ---
@@ -133,9 +133,6 @@ Access your deployed app at:
 ```
 http://<EXTERNAL-IP>
 ```
-
-⚠️ Note: The frontend service is exposed on port 80 by default for GCP compatibility.
-
 ---
 
 ## 🔐 Secrets and API Keys
