@@ -1,4 +1,4 @@
-# BookFinder - Final Project
+# BookFinder
 
 **BookFinder** is a web application that helps users discover books similar to their favorites by analyzing book descriptions and genres. It leverages natural language processing to compare descriptions and generate personalized recommendations from a custom dataset.
 
