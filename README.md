@@ -1,90 +1,179 @@
 # BookFinder - Final Project
 
-**BookFinder** is a web application that helps users discover books similar to their favorites by analyzing book descriptions and genres. It leverages natural language processing to compare book descriptions and provide personalized recommendations from a custom dataset.
+**BookFinder** is a web application that helps users discover books similar to their favorites by analyzing book descriptions and genres. It leverages natural language processing to compare descriptions and generate personalized recommendations from a custom dataset.
+
+---
 
 ## Features
 
-- **Search for books**: Use the Google Books API to search for books by title and author.
-- **Summarize descriptions**: Summarize book descriptions using a pre-trained model (`t5-small`) to extract key information.
-- **Find similar books**: Compare book descriptions using sentence embeddings to recommend similar books from a pre-loaded dataset.
-- **Clickable links**: Display results with clickable download links (Libgen) for easy access to recommended books.
+- 🔍 **Search by title & author** using the Google Books API
+- ✂️ **Summarize descriptions** with a pretrained `t5-small` model
+- 📚 **Find similar books** using sentence embeddings
+- 🔗 **Clickable Libgen links** for quick access to recommended titles
+
+---
 
 ## Tech Stack
 
-- **Python**: Core programming language.
-- **Streamlit**: Frontend framework for building the interactive web application.
-- **Transformers**: Used for text summarization.
-- **Sentence-Transformers**: Used for generating sentence embeddings.
-- **Pandas**: Data manipulation and analysis.
-- **NumPy**: Numerical operations.
-- **Google Books API**: Retrieve book data by title and author.
-- **Docker**: Containerization for both frontend and backend.
-- **Kubernetes**: Orchestration for deploying the application.
+- **Frontend**: Streamlit
+- **Backend**: Flask API + precomputed embeddings
+- **ML Models**: Transformers (T5), Sentence-Transformers
+- **Data Handling**: Pandas, NumPy
+- **Infrastructure**: Docker, Kubernetes, Terraform, GKE Autopilot
+- **APIs**: Google Books API
 
-## Architecture
+---
 
-The application consists of two main components:
+## Architecture Overview
 
-1. **Frontend Server**:
-   - Built using Streamlit.
-   - Runs on port `8501`.
-   - Connects to the backend server to fetch book recommendations.
+- **Frontend (Streamlit)** runs on port `8501`, calls backend API
+- **Backend (Flask)** runs on port `5000`, loads a CSV with 500+ books and precomputed embeddings
+- **Deployment**: Dockerized, deployed via Kubernetes
+- **Cloud Option**: Full deployment via Terraform to GCP using GKE Autopilot
 
-2. **Backend Server**:
-   - Built using Flask.
-   - Runs on port `5000`.
-   - Serves book data and recommendations by querying a CSV file containing a database of 500 popular books.
-
-The frontend and backend communicate via REST API calls. The backend uses pre-computed sentence embeddings stored in the CSV file to find similar books.
+---
 
 ## Repository Structure
 
-- **app/**: Frontend Streamlit application
-  - **app.py**: Main Streamlit web application.
-  - **Dockerfile**: Container definition for the frontend.
-  - **requirements.txt**: Frontend dependencies.
-- **backend/**: Backend API service
-  - **app.py**: Flask API for serving book data.
-  - **book_embeddings.csv**: Book data with embeddings.
-  - **Dockerfile**: Container definition for the backend.
-  - **requirements.txt**: Backend dependencies.
-- **k8s/**: Kubernetes manifests for deployment
-  - **kustomization.yaml**: Kustomize configuration.
-  - **frontend-deployment.yaml**: Frontend deployment configuration.
-  - **frontend-service.yaml**: Frontend service configuration.
-  - **backend-deployment.yaml**: Backend deployment configuration.
-  - **backend-service.yaml**: Backend service configuration.
-  - **configmap.yaml**: ConfigMap for application configuration.
-  - **secret.yaml**: Secrets for API keys and sensitive data.
-- **generate_embeddings.py**: Script to generate book embeddings.
+```
+BookFinder_FinalProject/
+├── app/                # Frontend (Streamlit)
+│   ├── app.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── backend/            # Backend (Flask)
+│   ├── app.py
+│   ├── book_embeddings.csv
+│   ├── Dockerfile
+│   └── requirements.txt
+├── k8s/                # Kubernetes manifests (Kustomize-ready)
+│   ├── kustomization.yaml
+│   ├── frontend-deployment.yaml
+│   ├── frontend-service.yaml
+│   ├── backend-deployment.yaml
+│   ├── backend-service.yaml
+│   ├── configmap.yaml
+│   └── secret.yaml
+├── infra/              # Terraform files for GCP Autopilot
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── terraform.tfvars.example
+│   └── README.md (optional)
+├── generate_embeddings.py
+└── README.md
+```
 
-## How to Replicate the Project
+---
+
+## 🔧 Local Kubernetes Deployment
 
 ### Prerequisites
 
-- Install **Kubernetes** on your system.
-- Obtain a Google Books API key.
+- Kubernetes (e.g. Minikube or Docker Desktop)
+- `kubectl` and `kustomize`
+- Docker (if building images locally)
+- A Google Books API key
 
-### Deployment Using Kubernetes
+### Steps
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/bennymestel/BookFinder_FinalProject.git
-   cd BookFinder_FinalProject
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/bennymestel/BookFinder_FinalProject.git
+cd BookFinder_FinalProject
 
-2. Apply the Kubernetes manifests:
-   ```bash
-   kubectl apply -k k8s/
-   ```
+# Apply manifests using Kustomize
+kubectl apply -k k8s/
 
-3. Access the application:
-   - The frontend server will be available at `http://localhost:8501`.
+# Streamlit will be available at:
+http://localhost:8501
+```
 
-### Notes
+---
 
-- The Docker images for the frontend and backend are pre-built and available on DockerHub under the `bennymestel` account:
-  - Frontend: `bennymestel/book-finder-frontend`
-  - Backend: `bennymestel/book-finder-backend`
-- To generate new book embeddings, use the `generate_embeddings.py` script.
-- Ensure your Google Books API key is stored securely in the `k8s/secret.yaml` file or as an environment variable.
+## ☁️ Cloud Deployment (GCP Autopilot via Terraform)
+
+### Prerequisites
+
+- Google Cloud SDK
+- Terraform
+- A GCP account with billing enabled
+- Docker images published on DockerHub:
+  - `bennymestel/book-finder-frontend`
+  - `bennymestel/book-finder-backend`
+
+### Steps
+
+```bash
+# Clone and enter the Terraform directory
+cd BookFinder_FinalProject/iac
+
+# Set up variables
+cp terraform.tfvars.example terraform.tfvars
+# Then edit terraform.tfvars with your GCP project ID
+
+# Authenticate with GCP
+gcloud auth login
+gcloud auth application-default login
+
+# Deploy the infrastructure
+terraform init
+terraform apply
+
+# Connect to GKE (replace REGION with the region you specified in terraform.tfvars)
+gcloud container clusters get-credentials bookfinder-cluster --region=REGION
+
+# Deploy the app
+kubectl apply -k ../k8s/
+
+# Get external IP
+kubectl get svc book-finder-frontend
+```
+
+Access your deployed app at:
+
+```
+http://<EXTERNAL-IP>
+```
+
+⚠️ Note: The frontend service is exposed on port 80 by default for GCP compatibility.
+
+---
+
+## 🔐 Secrets and API Keys
+
+Store your Google Books API key securely:
+
+- In `k8s/secret.yaml`
+- Or as an environment variable
+
+Streamlit config and secrets can be set via mounted `secrets.toml`.
+
+---
+
+## 🔁 Updating Embeddings
+
+To regenerate `book_embeddings.csv`:
+
+```bash
+python generate_embeddings.py
+```
+
+Replace the CSV in `backend/`, rebuild the image, and redeploy.
+
+---
+
+## 📦 Docker Images
+
+Prebuilt images are hosted on DockerHub:
+
+- Frontend: `bennymestel/book-finder-frontend`
+- Backend: `bennymestel/book-finder-backend`
+
+---
+
+## ✅ Status
+
+- App runs locally and in the cloud
+- Fully containerized and K8s-deployable
+- Infrastructure as Code with Terraform
+- Public GCP-compatible deployment path
