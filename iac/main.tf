@@ -1,6 +1,6 @@
 provider "google" {
     project = var.project_id
-    region  = var. region
+    region  = var.region
 }
 
 resource "google_container_cluster" "book-finder" {
