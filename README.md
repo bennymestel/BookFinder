@@ -54,7 +54,7 @@ BookFinder_FinalProject/
 │   ├── backend-service.yaml
 │   ├── configmap.yaml
 │   └── secret.yaml
-├── infra/              # Terraform files for GCP Autopilot
+├── iac/              # Terraform files for GCP Autopilot
 │   ├── main.tf
 │   ├── variables.tf
 │   ├── terraform.tfvars.example
