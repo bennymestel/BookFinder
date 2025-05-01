@@ -109,8 +109,7 @@ http://localhost:8501
 cd BookFinder_FinalProject/iac
 
 # Set up variables
-cp terraform.tfvars.example terraform.tfvars
-# Then edit terraform.tfvars with your GCP project ID
+# Edit terraform.tfvars with your GCP project ID and region
 
 # Authenticate with GCP
 gcloud auth login
