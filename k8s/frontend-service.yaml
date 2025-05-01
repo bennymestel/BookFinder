@@ -6,6 +6,7 @@ spec:
   selector:
     app: book-finder-frontend
   ports:
-  - port: 8501
+  - protocol: TCP
+    port: 80
     targetPort: 8501
   type: LoadBalancer
