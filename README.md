@@ -57,8 +57,7 @@ BookFinder_FinalProject/
 ├── iac/              # Terraform files for GCP Autopilot
 │   ├── main.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars.example
-│   └── README.md (optional)
+│   └── terraform.tfvars
 ├── scripts/              # Utility scripts for dataset preperation and model training
 │   └── generate_embeddings.py
 └── README.md
