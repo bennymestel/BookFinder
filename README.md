@@ -119,7 +119,7 @@ terraform init
 terraform apply
 
 # Connect to GKE (replace REGION with the region you specified in terraform.tfvars)
-gcloud container clusters get-credentials bookfinder-cluster --region=REGION
+gcloud container clusters get-credentials book-finder-cluster --region=REGION
 
 # Deploy the app
 kubectl apply -k ../k8s/
