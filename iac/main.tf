@@ -8,4 +8,5 @@ resource "google_container_cluster" "book-finder" {
     location = var.region
     enable_autopilot = true
     networking_mode = "VPC_NATIVE"
+    deletion_protection = false
 }
