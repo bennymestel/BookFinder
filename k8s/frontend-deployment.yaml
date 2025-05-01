@@ -17,6 +17,12 @@ spec:
         image: bennymestel/book-finder-frontend:latest
         ports:
         - containerPort: 8501
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 5
+          periodSeconds: 10
         env:
         - name: BACKEND_URL
           valueFrom:
