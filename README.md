@@ -36,7 +36,7 @@
 ## Repository Structure
 
 ```
-BookFinder_FinalProject/
+BookFinder/
 ├── app/                # Frontend (Streamlit)
 │   ├── app.py
 │   ├── Dockerfile
@@ -78,8 +78,8 @@ BookFinder_FinalProject/
 
 ```bash
 # Clone the repository
-git clone https://github.com/bennymestel/BookFinder_FinalProject.git
-cd BookFinder_FinalProject
+git clone https://github.com/bennymestel/BookFinder.git
+cd BookFinder
 
 # Apply manifests using Kustomize
 kubectl apply -k k8s/
@@ -105,7 +105,7 @@ http://localhost:8501
 
 ```bash
 # Clone and enter the Terraform directory
-cd BookFinder_FinalProject/iac
+cd BookFinder/iac
 
 # Set up variables
 # Edit terraform.tfvars with your GCP project ID and region
