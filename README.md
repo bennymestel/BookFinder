@@ -59,7 +59,8 @@ BookFinder_FinalProject/
 │   ├── variables.tf
 │   ├── terraform.tfvars.example
 │   └── README.md (optional)
-├── generate_embeddings.py
+├── scripts/              # Utility scripts for dataset preperation and model training
+│   └── generate_embeddings.py
 └── README.md
 ```
 
@@ -155,7 +156,7 @@ Streamlit config and secrets can be set via mounted `secrets.toml`.
 To regenerate `book_embeddings.csv`:
 
 ```bash
-python generate_embeddings.py
+python scripts/generate_embeddings.py
 ```
 
 Replace the CSV in `backend/`, rebuild the image, and redeploy.
