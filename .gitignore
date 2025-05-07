@@ -1,0 +1,8 @@
+# Ignore everything in iac/
+iac/*
+
+# Except these files
+!iac/main.tf
+!iac/variables.tf
+!iac/terraform.tfvars
+
