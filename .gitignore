@@ -1,4 +1,9 @@
-# Ignore Terraform state and lock files
-iac/terraform.tfstate
-iac/terraform.tfstate.backup
-iac/.terraform.lock.hcl
+# Ignore everything in iac/
+iac/*
+deployments/helm/bookfinder/templates/nohup.out
+# Except these files
+!iac/main.tf
+!iac/variables.tf
+!iac/terraform.tfvars
+deployments/helm/bookfinder-*
+bookfinder-*
