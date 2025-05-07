@@ -1,0 +1,28 @@
+apiVersion: v2
+name: bookfinder
+description: A Helm chart for the BookFinder application
+
+type: application
+
+# Chart version
+version: 0.1.0
+
+# Application version
+appVersion: "1.0.0"
+
+# Keywords for this application
+keywords:
+  - bookfinder
+  - flask
+  - streamlit
+
+# Home URL of the application
+home: https://github.com/bennymestel/BookFinder
+
+# Maintainer information
+maintainers:
+  - name: Benny Mestel
+    # email: bennymestel@gmail.com
+
+# Application details
+kubeVersion: ">=1.16.0-0"

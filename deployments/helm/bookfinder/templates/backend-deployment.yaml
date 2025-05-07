@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.name }}
+  labels:
+    {{- include "bookfinder.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backend
+spec:
+  selector:
+    matchLabels:
+      {{- include "bookfinder.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: backend
+  replicas: {{ .Values.backend.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{- include "bookfinder.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: backend
+    spec:
+      containers:
+      - name: backend
+        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.backend.service.targetPort }}
+        resources:
+          {{- toYaml .Values.backend.resources | nindent 10 }}

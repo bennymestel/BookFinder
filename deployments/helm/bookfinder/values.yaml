@@ -1,0 +1,53 @@
+# Default values for BookFinder Helm chart
+
+# Frontend configuration
+frontend:
+  name: book-finder-frontend
+  replicaCount: 1
+  image:
+    repository: bennymestel/book-finder-frontend
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: LoadBalancer
+    port: 80
+    targetPort: 8501
+  resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 1Gi
+
+# Backend configuration
+backend:
+  name: backend
+  replicaCount: 1
+  image:
+    repository: bennymestel/book-finder-backend
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+# Chart name overrides (if needed)
+nameOverride: ""
+fullnameOverride: ""
+
+# Google Books API Key
+googleBooksApiKey: ""
+
+# Service account configuration
+serviceAccount:
+  create: true
+  name: ""
