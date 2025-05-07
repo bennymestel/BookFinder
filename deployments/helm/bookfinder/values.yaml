@@ -22,7 +22,7 @@ frontend:
 
 # Backend configuration
 backend:
-  name: book-finder-backend
+  name: backend
   replicaCount: 1
   image:
     repository: bennymestel/book-finder-backend
