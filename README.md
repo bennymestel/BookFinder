@@ -48,17 +48,17 @@ BookFinder/
 │   └── requirements.txt
 ├── deployments/        # Deployment configuration
 │   ├── helm/           # Helm charts for Kubernetes deployment
-│   │   ├── bookfinder/ # Main chart directory
-│   │   │   ├── Chart.yaml
-│   │   │   ├── values.yaml
-│   │   │   └── templates/
-│   │   │       ├── _helpers.tpl
-│   │   │       ├── backend-deployment.yaml
-│   │   │       ├── backend-service.yaml
-│   │   │       ├── configmap.yaml
-│   │   │       ├── frontend-deployment.yaml
-│   │   │       ├── frontend-service.yaml
-│   │   └──     └── secret.yaml
+│   │   └── bookfinder/ # Main chart directory
+│   │       ├── Chart.yaml
+│   │       ├── values.yaml
+│   │       └── templates/
+│   │           ├── _helpers.tpl
+│   │           ├── backend-deployment.yaml
+│   │           ├── backend-service.yaml
+│   │           ├── configmap.yaml
+│   │           ├── frontend-deployment.yaml
+│   │           ├── frontend-service.yaml
+│   │           └── secret.yaml
 │   └── kustomize/      # Kustomize-ready Kubernetes manifests
 │       ├── kustomization.yaml
 │       ├── frontend-deployment.yaml
@@ -110,9 +110,6 @@ cd BookFinder
 
 # Install using the Helm chart
 helm install bookfinder ./deployments/helm/bookfinder
-
-# Alternatively, use the packaged chart
-helm install bookfinder ./bookfinder-0.1.0.tgz
 
 # Streamlit will be available at:
 http://localhost
