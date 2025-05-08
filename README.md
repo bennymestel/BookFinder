@@ -19,7 +19,7 @@
 - **Backend**: Flask API + precomputed embeddings
 - **ML Models**: Transformers (T5), Sentence-Transformers
 - **Data Handling**: Pandas, NumPy
-- **Infrastructure**: Docker, Kubernetes, Terraform, GKE Autopilot
+- **Infrastructure**: Docker, Kubernetes, Helm, Kustomize, Terraform, GKE Autopilot
 - **APIs**: Google Books API
 
 ---
