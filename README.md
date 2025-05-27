@@ -58,6 +58,7 @@ BookFinder/
 │   │           ├── configmap.yaml
 │   │           ├── frontend-deployment.yaml
 │   │           ├── frontend-service.yaml
+│   │           ├── ingress.yaml
 │   │           └── secret.yaml
 │   └── kustomize/      # Kustomize-ready Kubernetes manifests
 │       ├── kustomization.yaml
@@ -66,6 +67,7 @@ BookFinder/
 │       ├── backend-deployment.yaml
 │       ├── backend-service.yaml
 │       ├── configmap.yaml
+│       ├── ingress.yaml
 │       └── secret.yaml
 ├── iac/                # Terraform files for GCP Autopilot
 │   ├── main.tf
@@ -89,31 +91,50 @@ BookFinder/
 
 ### Option 1: Kustomize Deployment
 
+Follow these steps to deploy BookFinder using Kustomize:
+
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/bennymestel/BookFinder.git
 cd BookFinder
 
-# Apply manifests using Kustomize
+# 2. Add a local DNS entry
+# For macOS/Linux:
+echo "127.0.0.1 bookfinder.local" | sudo tee -a /etc/hosts
+# For Windows (run PowerShell as Administrator):
+Add-Content -Path "$env:windir\System32\drivers\etc\hosts" -Value "`n127.0.0.1 bookfinder.local" -Force
+
+# 3. Apply manifests using Kustomize
 kubectl apply -k deployments/kustomize/
 
-# Streamlit will be available at:
-http://localhost
+# 4. Start a tunnel for ingress access (keep this terminal open)
+minikube tunnel
 ```
+
+Once deployed, BookFinder will be available at: http://bookfinder.local
+
+> **Note:** The frontend application may take a few minutes to become fully operational on initial startup. This delay is primarily due to downloading and initializing the ML models (T5 and Sentence-Transformers).
 
 ### Option 2: Helm Deployment
 
+Follow these steps to deploy BookFinder using Helm:
+
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/bennymestel/BookFinder.git
 cd BookFinder
 
-# Install using the Helm chart
-helm install bookfinder ./deployments/helm/bookfinder
+# 2. Add a local DNS entry
+# For macOS/Linux:
+echo "127.0.0.1 bookfinder.local" | sudo tee -a /etc/hosts
+# For Windows (run PowerShell as Administrator):
+Add-Content -Path "$env:windir\System32\drivers\etc\hosts" -Value "`n127.0.0.1 bookfinder.local" -Force
 
-# Streamlit will be available at:
-http://localhost
+# 3. Install using the Helm chart
+helm install bookfinder ./deployments/helm/bookfinder
 ```
+
+Once deployed, BookFinder will be available at: http://bookfinder.local
 
 > **Note:** The frontend application may take a few minutes to become fully operational on initial startup. This delay is primarily due to downloading and initializing the ML models (T5 and Sentence-Transformers).
 
@@ -225,3 +246,4 @@ Prebuilt images are hosted on DockerHub:
 - Multiple deployment options: Kustomize and Helm
 - Infrastructure as Code with Terraform
 - Public GCP-compatible deployment path
+- Kubernetes Ingress for unified access

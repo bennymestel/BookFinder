@@ -9,7 +9,7 @@ frontend:
     pullPolicy: IfNotPresent
     tag: "latest"
   service:
-    type: LoadBalancer
+    type: ClusterIP
     port: 80
     targetPort: 8501
   resources:
@@ -39,6 +39,22 @@ backend:
     requests:
       cpu: 200m
       memory: 256Mi
+
+# Ingress configuration
+ingress:
+  enabled: true
+  host: bookfinder.local
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+# Streamlit configuration
+streamlit:
+  server:
+    enableCORS: false
+    enableXsrfProtection: false
+    baseUrlPath: "/"
 
 # Chart name overrides (if needed)
 nameOverride: ""
