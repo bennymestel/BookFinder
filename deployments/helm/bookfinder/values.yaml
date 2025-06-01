@@ -14,11 +14,11 @@ frontend:
     targetPort: 8501
   resources:
     limits:
+      cpu: 1000m
+      memory: 4Gi
+    requests:
       cpu: 500m
       memory: 2Gi
-    requests:
-      cpu: 250m
-      memory: 1Gi
 
 # Backend configuration
 backend:
@@ -34,17 +34,18 @@ backend:
     targetPort: 5000
   resources:
     limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
       cpu: 500m
       memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 256Mi
 
 # Ingress configuration
 ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.allow-http: "true"
 
 # Streamlit configuration
 streamlit:

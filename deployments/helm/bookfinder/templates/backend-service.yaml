@@ -6,10 +6,11 @@ metadata:
     {{- include "bookfinder.labels" . | nindent 4 }}
     app.kubernetes.io/component: backend
 spec:
-  type: {{ .Values.backend.service.type }}
-  selector:
-    {{- include "bookfinder.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: backend
   ports:
   - port: {{ .Values.backend.service.port }}
     targetPort: {{ .Values.backend.service.targetPort }}
+    protocol: TCP
+  selector:
+    {{- include "bookfinder.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: backend
+  type: {{ .Values.backend.service.type }}
