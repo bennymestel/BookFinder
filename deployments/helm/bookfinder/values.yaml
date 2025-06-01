@@ -43,11 +43,16 @@ backend:
 # Ingress configuration
 ingress:
   enabled: true
-  host: bookfinder.local
+  host: bookfinder.local  # Replace with your actual domain when deploying to production
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "bookfinder-ip"  # Optional: Reference a reserved static IP
+    networking.gke.io/managed-certificates: "bookfinder-cert"  # Optional: For HTTPS
+    networking.gke.io/v1beta1.FrontendConfig: "bookfinder-frontend-config"  # Optional: For advanced settings
+  tls: []  # Uncomment and configure for HTTPS
+  # - secretName: bookfinder-tls
+  #   hosts:
+  #     - bookfinder.example.com
 
 # Streamlit configuration
 streamlit:

@@ -171,14 +171,11 @@ terraform apply
 # Connect to GKE (replace REGION with the region you specified in terraform.tfvars)
 gcloud container clusters get-credentials book-finder-cluster --region=REGION
 
-# Deploy using Kustomize
-kubectl apply -k ../deployments/kustomize/
-
-# OR deploy using Helm
+# Deploy using Helm
 helm install bookfinder ../deployments/helm/bookfinder
 
 # Get external IP
-kubectl get svc book-finder-frontend
+kubectl get ingress
 ```
 
 Access your deployed app at:
