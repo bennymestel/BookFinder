@@ -80,63 +80,46 @@ BookFinder/
 
 ---
 
-## 🔧 Local Kubernetes Deployment
+## 🔧 Deployment Options
 
-### Prerequisites
+### Local Development (Kustomize)
 
-- Kubernetes (e.g. Minikube or Docker Desktop)
-- `kubectl` with either `kustomize` or `helm` (v3+)
-- Docker (if building images locally)
-- A Google Books API key
-
-### Option 1: Kustomize Deployment
-
-Follow these steps to deploy BookFinder using Kustomize:
+For local development and testing, I recommend using Kustomize with minikube:
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/bennymestel/BookFinder.git
 cd BookFinder
 
-# 2. Add a local DNS entry
+# 2. Start minikube
+minikube start
+
+# 3. Add a local DNS entry
 # For macOS/Linux:
 echo "127.0.0.1 bookfinder.local" | sudo tee -a /etc/hosts
 # For Windows (run PowerShell as Administrator):
 Add-Content -Path "$env:windir\System32\drivers\etc\hosts" -Value "`n127.0.0.1 bookfinder.local" -Force
 
-# 3. Apply manifests using Kustomize
+# 4. Apply manifests using Kustomize
 kubectl apply -k deployments/kustomize/
 
-# 4. Start a tunnel for ingress access (keep this terminal open)
+# 5. Start a tunnel for ingress access (keep this terminal open)
 minikube tunnel
 ```
 
 Once deployed, BookFinder will be available at: http://bookfinder.local
 
-> **Note:** The frontend application may take a few minutes to become fully operational on initial startup. This delay is primarily due to downloading and initializing the ML models (T5 and Sentence-Transformers).
-
-### Option 2: Helm Deployment
-
-Follow these steps to deploy BookFinder using Helm:
-
+You can check the deployment status with:
 ```bash
-# 1. Clone the repository
-git clone https://github.com/bennymestel/BookFinder.git
-cd BookFinder
-
-# 2. Add a local DNS entry
-# For macOS/Linux:
-echo "127.0.0.1 bookfinder.local" | sudo tee -a /etc/hosts
-# For Windows (run PowerShell as Administrator):
-Add-Content -Path "$env:windir\System32\drivers\etc\hosts" -Value "`n127.0.0.1 bookfinder.local" -Force
-
-# 3. Install using the Helm chart
-helm install bookfinder ./deployments/helm/bookfinder
+kubectl get pods
+kubectl get ingress
 ```
 
-Once deployed, BookFinder will be available at: http://bookfinder.local
+> **Note:** Both frontend and backend services may take a few minutes to become fully operational on initial startup. The frontend needs time to download and initialize ML models (T5 and Sentence-Transformers), while the backend loads embeddings and prepares the recommendation system.
 
-> **Note:** The frontend application may take a few minutes to become fully operational on initial startup. This delay is primarily due to downloading and initializing the ML models (T5 and Sentence-Transformers).
+### GCP Cloud Deployment (Helm)
+
+For GCP deployments, I recommend using Helm which is pre-configured for GCP's load balancing:
 
 ---
 
@@ -152,6 +135,8 @@ Once deployed, BookFinder will be available at: http://bookfinder.local
   - `bennymestel/book-finder-backend`
 
 ### Steps
+
+1. **Set up GKE Autopilot with Terraform**:
 
 ```bash
 # Clone and enter the Terraform directory
@@ -170,41 +155,25 @@ terraform apply
 
 # Connect to GKE (replace REGION with the region you specified in terraform.tfvars)
 gcloud container clusters get-credentials book-finder-cluster --region=REGION
-
-# Deploy using Kustomize
-kubectl apply -k ../deployments/kustomize/
-
-# OR deploy using Helm
-helm install bookfinder ../deployments/helm/bookfinder
-
-# Get external IP
-kubectl get svc book-finder-frontend
 ```
 
-Access your deployed app at:
+2. **Deploy BookFinder using Helm**:
+
+```bash
+# Deploy using Helm with GCP-optimized settings
+helm install bookfinder ../deployments/helm/bookfinder
+
+# Get external IP (may take 5-10 minutes to provision)
+kubectl get ingress
+```
+
+Access your deployed app at the external IP address shown:
 
 ```
 http://<EXTERNAL-IP>
 ```
 
-> **Note:** The frontend application may take a few minutes to become fully operational on initial startup. This delay is primarily due to downloading and initializing the ML models (T5 and Sentence-Transformers).
----
-
-## 🛞 Helm Chart Configuration
-
-The Helm chart provides basic deployment configuration for the BookFinder application:
-
-```bash
-# View available configuration options
-helm show values ./deployments/helm/bookfinder
-
-# Install with custom values file (if needed)
-helm install bookfinder ./deployments/helm/bookfinder -f my-values.yaml
-
-# Uninstall the application
-helm uninstall bookfinder
-```
-
+> **Note:** Both frontend and backend services may take a few minutes to become fully operational on initial startup. The frontend needs time to download and initialize ML models (T5 and Sentence-Transformers), while the backend loads embeddings and prepares the recommendation system.
 ---
 
 ## 🔐 Secrets and API Keys
